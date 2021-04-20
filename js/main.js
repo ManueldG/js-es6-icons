@@ -14,30 +14,33 @@ function main(){
                 return a.type===select.value; //filtro valori corrispondenti in option
             }
             else
-                return a.type;            
+                return a.type;  // ritorno type i tipi da visulizzare     
         });
 
         list=document.querySelector(".content");
-        list.parentNode.innerHTML='';
+        list.parentNode.innerHTML=''; // resetto content
         list.innerHTML=''; // resetto la list
         printIcon(type,list); // ristampo le icone
         
     });
     //console.log(icons);
-    for (var i in tP)
+    for (var i in tP) // creo le opzioni
     document.getElementById('selezione').innerHTML+='<option value="'+tP[i]+'">'+tP[i]+'</option>'; //template option
-        
-    
-    
-    printIcon(type,list);
+    printIcon(type,list); // stampo le icone
 
     
-    
+    appendI
 }
 
 /*funzioni*/
-
-function createI(tpl1,tpl2,color){ // crea elemento
+/**
+ * 
+ * @param {string} tpl1 - classe 
+ * @param {string} tpl2 - classe
+ * @param {string} color - classe
+ * @returns elemento i
+ */
+function createI(tpl1,tpl2,color){ // crea elemento i e aggiunge le classi
     var cla = document.createElement("I"); 
         cla.classList.add (tpl1);
         cla.classList.add (tpl2);
@@ -45,13 +48,24 @@ function createI(tpl1,tpl2,color){ // crea elemento
         return cla;    
 }
 
-function appendI(list,cla){ 
+/**
+ * 
+ * @param {Object} list - contenitore
+ * @param {Object} cla  - elemento da appendere
+ * @returns {Object} list - ritorna contenitore popolato
+ */
+function appendI(list,cla){ // appende cla a list
     list.appendChild(cla);
     document.querySelector('main').appendChild(list); 
     return list=(list.cloneNode(false));
 }
 
-function getTp(arr){
+/**
+ * 
+ * @param {Object[]} arr - array di oggetti icone  
+ * @returns ritorna i tipi di icone solo una volta
+ */
+function getTp(arr){ // 
     var types = [];
     arr.forEach(function(a){
         //oggetto,indice,array
@@ -63,13 +77,19 @@ function getTp(arr){
     return types;
 }
 
+/**
+ * 
+ * @param {*} type - tipo di icone da stampare
+ * @param {*} list - contenuto 
+ */
 function printIcon(type,list){
 
-    type.forEach((el,k)=>{
+    type.forEach((el)=>{
     
-        tpl1 = type[k].family;
-        tpl2 =type[k].prefix+type[k].name;
-        switch(type[k].type){
+        //tpl1 = type[k].family;
+        tpl1 = el.family;
+        tpl2 =el.prefix+el.name;
+        switch(el.type){
             case 'user': color= 'color1';
             break;
             case 'vegetable': color= 'color2';
