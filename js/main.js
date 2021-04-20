@@ -23,16 +23,14 @@ function main(){
         printIcon(type,list); // ristampo le icone
         
     });
-    //console.log(icons);
+    
     for (var i in tP) // creo le opzioni
     document.getElementById('selezione').innerHTML+='<option value="'+tP[i]+'">'+tP[i]+'</option>'; //template option
     printIcon(type,list); // stampo le icone
-
-    
-    appendI
 }
 
 /*funzioni*/
+
 /**
  * 
  * @param {string} tpl1 - classe 
@@ -83,12 +81,10 @@ function getTp(arr){ //
  * @param {*} list - contenuto 
  */
 function printIcon(type,list){
-
     type.forEach((el)=>{
-    
-        //tpl1 = type[k].family;
         tpl1 = el.family;
         tpl2 =el.prefix+el.name;
+
         switch(el.type){
             case 'user': color= 'color1';
             break;
@@ -97,10 +93,9 @@ function printIcon(type,list){
             case 'animal': color= 'color3';
             break;
         };
+
         var cla=createI(tpl1,tpl2,color);
-        list = appendI(list,cla);
-         
-           
+        list = appendI(list,cla);           
         return color;
     });
 
