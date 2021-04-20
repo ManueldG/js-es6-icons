@@ -1,33 +1,74 @@
 
 function main(){
-    var select = document.querySelector('#selezione');
-    var tP=getTp(icons);
-    var list= document.querySelector(".content");
-    console.log(select);
-    select.addEventListener('change',()=>{
-        const selected = select.value;
-    })
+    var select = document.querySelector('#selezione');//option
+    var tP=getTp(icons); // template icone
+    var list= document.querySelector(".content"); // contenitore icone
+    var type=icons.filter((a)=>{
+            console.log("filter",a.type);
+            return a.type;
+        });
+
+    select.addEventListener('change',function(){ // evento change
+        type=icons.filter((a)=>{
+            if (select.value!=='all'){
+                return a.type===select.value; //filtro valori corrispondenti in option
+            }
+            else
+                return a.type;            
+        });
+
+        list=document.querySelector(".content");
+        list.parentNode.innerHTML='';
+        list.innerHTML=''; // resetto la list
+        printIcon(type,list); // ristampo le icone
+        
+    });
     //console.log(icons);
     for (var i in tP)
-    document.getElementById('selezione').innerHTML+='<option value="'+tP[i]+'">'+tP[i]+'</option>';
-    
-    
-    document.getElementById('selezione').onchange=function(){
-        this.innerHTML+= 'sdafsd';
-    }
-    
-    var color;
-    var type=icons.filter((a)=>{
-            
-            return (a.type==tP[0]);
-        })
-    for(k in type){
-        console.table(type[k]);// fas fa-crow <i class="fas fa-crow"></i>
+    document.getElementById('selezione').innerHTML+='<option value="'+tP[i]+'">'+tP[i]+'</option>'; //template option
         
-        
-        console.log(type);
-        var tpl1 = type[k].family;
-        var tpl2 =type[k].prefix+type[k].name;
+    
+    
+    printIcon(type,list);
+
+    
+    
+}
+
+/*funzioni*/
+
+function createI(tpl1,tpl2,color){ // crea elemento
+    var cla = document.createElement("I"); 
+        cla.classList.add (tpl1);
+        cla.classList.add (tpl2);
+        cla.classList.add (color);
+        return cla;    
+}
+
+function appendI(list,cla){ 
+    list.appendChild(cla);
+    document.querySelector('main').appendChild(list); 
+    return list=(list.cloneNode(false));
+}
+
+function getTp(arr){
+    var types = [];
+    arr.forEach(function(a){
+        //oggetto,indice,array
+        if (!(types.includes(a.type))){            
+            types.push(a.type);
+        }            
+        return types;
+    })
+    return types;
+}
+
+function printIcon(type,list){
+
+    type.forEach((el,k)=>{
+    
+        tpl1 = type[k].family;
+        tpl2 =type[k].prefix+type[k].name;
         switch(type[k].type){
             case 'user': color= 'color1';
             break;
@@ -35,45 +76,12 @@ function main(){
             break;
             case 'animal': color= 'color3';
             break;
-        }
+        };
+        var cla=createI(tpl1,tpl2,color);
+        list = appendI(list,cla);
+         
+           
+        return color;
+    });
 
-    
-        
-        
-        
-        //console.log(listC);
-
-        var cla = document.createElement("I");
-        //var box = document.createElement("DIV");  
-        //box.classList.add ('box'); 
-        //console.log(box);                
-        cla.classList.add (tpl1);
-        cla.classList.add (tpl2);
-        cla.classList.add (color);    
-
-        list.appendChild(cla);
-        //console.log(document.querySelector('main')); 
-        //console.log(document.getElementsById("main"));
-        document.querySelector('main').appendChild(list); 
-        var list=(list.cloneNode(false));
-       
-}
-        
-        
-    
-
-}
-
-function getTp(arr){
-    var types = [];
-    arr.forEach(function(a){
-        //oggetto,indice,array
-        if (!(types.includes(a.type))){
-            console.log(types); 
-            types.push(a.type);
-        }
-            
-        return types;
-    })
-    return types;
 }
